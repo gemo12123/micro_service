@@ -21,6 +21,7 @@
         <dubbo.version>3.0.7</dubbo.version>
         <slf4j-log4j12.version>1.7.25</slf4j-log4j12.version>
         <spring-boot.version>2.3.1.RELEASE</spring-boot.version>
+        <junit.version>4.13.2</junit.version>
     </properties>
 
     <dependencyManagement>
@@ -42,6 +43,7 @@
                 <scope>import</scope>
             </dependency>
 
+            <!-- zk版本不同，需要的依赖也不同，具体参看https://cn.dubbo.apache.org/zh-cn/overview/mannual/java-sdk/reference-manual/registry/zookeeper/ -->
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-dependencies-zookeeper</artifactId>
