@@ -9,8 +9,8 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>dubbo-sell</module>
-        <module>dubbo-store</module>
+        <module>dubbo-consumer</module>
+        <module>dubbo-provider</module>
         <module>dubbo-interface</module>
     </modules>
 
