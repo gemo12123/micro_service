@@ -18,9 +18,11 @@ public class ContextService implements IContextService{
     public String invoke(String param) {
         //ServerAttachment接收客户端传递过来的参数
         Map<String, Object> serverAttachments = RpcContext.getServerAttachment().getObjectAttachments();
-        log.info("attachment:{}" , serverAttachments);
+        log.info("attachment: {}" , serverAttachments);
         //往客户端传递参数
+        // 可传入
         RpcContext.getServerContext().setAttachment("serverKey","serverValue");
+        // 无法传入
         RpcContext.getClientAttachment().setAttachment("serverKey2","serverValue2");
         return param;
     }

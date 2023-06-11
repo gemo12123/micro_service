@@ -25,7 +25,9 @@ public class ContextController {
     @GetMapping("/context")
     public String run(){
         //往服务端传递参数
+        // 可传入provider
         RpcContext.getClientAttachment().setAttachment("clientKey1","clientValue1");
+        // 不可传入provider
         RpcContext.getServerContext().setAttachment("clientKey2","clientValue2");
         String test = contextService.invoke("test");
         Map<String, Object> clientAttachment = RpcContext.getServerContext().getObjectAttachments();
