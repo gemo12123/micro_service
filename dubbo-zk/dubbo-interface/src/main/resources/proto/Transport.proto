@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_multiple_files=true;
+option optimize_for =SPEED;
+option java_package = "org.mytest.test.entity.proto";
+option java_outer_classname = "TransportDefine";
+
+message Request {
+  string param=1;
+}
+
+message Response {
+  bool result=1;
+}
