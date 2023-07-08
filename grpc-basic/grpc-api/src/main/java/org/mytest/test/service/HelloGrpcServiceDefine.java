@@ -24,9 +24,10 @@ public final class HelloGrpcServiceDefine {
   static {
     java.lang.String[] descriptorData = {
       "\n\026HelloGrpcService.proto\032\017HelloGrpc.prot" +
-      "o2Y\n\020HelloGrpcService\022\036\n\007request\022\010.Reque" +
-      "st\032\t.Response\022%\n\014serverStream\022\010.Request\032" +
-      "\t.Response0\001B5\n\027org.mytest.test.serviceB" +
+      "o2\200\001\n\020HelloGrpcService\022\036\n\007request\022\010.Requ" +
+      "est\032\t.Response\022%\n\014serverStream\022\010.Request" +
+      "\032\t.Response0\001\022%\n\014clientStream\022\010.Request\032" +
+      "\t.Response(\001B5\n\027org.mytest.test.serviceB" +
       "\026HelloGrpcServiceDefineH\001P\000b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor

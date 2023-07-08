@@ -77,6 +77,37 @@ public final class HelloGrpcServiceGrpc {
     return getServerStreamMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<org.mytest.test.entity.HelloGrpc.Request,
+      org.mytest.test.entity.HelloGrpc.Response> getClientStreamMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "clientStream",
+      requestType = org.mytest.test.entity.HelloGrpc.Request.class,
+      responseType = org.mytest.test.entity.HelloGrpc.Response.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+  public static io.grpc.MethodDescriptor<org.mytest.test.entity.HelloGrpc.Request,
+      org.mytest.test.entity.HelloGrpc.Response> getClientStreamMethod() {
+    io.grpc.MethodDescriptor<org.mytest.test.entity.HelloGrpc.Request, org.mytest.test.entity.HelloGrpc.Response> getClientStreamMethod;
+    if ((getClientStreamMethod = HelloGrpcServiceGrpc.getClientStreamMethod) == null) {
+      synchronized (HelloGrpcServiceGrpc.class) {
+        if ((getClientStreamMethod = HelloGrpcServiceGrpc.getClientStreamMethod) == null) {
+          HelloGrpcServiceGrpc.getClientStreamMethod = getClientStreamMethod =
+              io.grpc.MethodDescriptor.<org.mytest.test.entity.HelloGrpc.Request, org.mytest.test.entity.HelloGrpc.Response>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "clientStream"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  org.mytest.test.entity.HelloGrpc.Request.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  org.mytest.test.entity.HelloGrpc.Response.getDefaultInstance()))
+              .setSchemaDescriptor(new HelloGrpcServiceMethodDescriptorSupplier("clientStream"))
+              .build();
+        }
+      }
+    }
+    return getClientStreamMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -145,6 +176,16 @@ public final class HelloGrpcServiceGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getServerStreamMethod(), responseObserver);
     }
 
+    /**
+     * <pre>
+     * 客户端流式RPC
+     * </pre>
+     */
+    public io.grpc.stub.StreamObserver<org.mytest.test.entity.HelloGrpc.Request> clientStream(
+        io.grpc.stub.StreamObserver<org.mytest.test.entity.HelloGrpc.Response> responseObserver) {
+      return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getClientStreamMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -161,6 +202,13 @@ public final class HelloGrpcServiceGrpc {
                 org.mytest.test.entity.HelloGrpc.Request,
                 org.mytest.test.entity.HelloGrpc.Response>(
                   this, METHODID_SERVER_STREAM)))
+          .addMethod(
+            getClientStreamMethod(),
+            io.grpc.stub.ServerCalls.asyncClientStreamingCall(
+              new MethodHandlers<
+                org.mytest.test.entity.HelloGrpc.Request,
+                org.mytest.test.entity.HelloGrpc.Response>(
+                  this, METHODID_CLIENT_STREAM)))
           .build();
     }
   }
@@ -199,6 +247,17 @@ public final class HelloGrpcServiceGrpc {
         io.grpc.stub.StreamObserver<org.mytest.test.entity.HelloGrpc.Response> responseObserver) {
       io.grpc.stub.ClientCalls.asyncServerStreamingCall(
           getChannel().newCall(getServerStreamMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
+     * 客户端流式RPC
+     * </pre>
+     */
+    public io.grpc.stub.StreamObserver<org.mytest.test.entity.HelloGrpc.Request> clientStream(
+        io.grpc.stub.StreamObserver<org.mytest.test.entity.HelloGrpc.Response> responseObserver) {
+      return io.grpc.stub.ClientCalls.asyncClientStreamingCall(
+          getChannel().newCall(getClientStreamMethod(), getCallOptions()), responseObserver);
     }
   }
 
@@ -266,6 +325,7 @@ public final class HelloGrpcServiceGrpc {
 
   private static final int METHODID_REQUEST = 0;
   private static final int METHODID_SERVER_STREAM = 1;
+  private static final int METHODID_CLIENT_STREAM = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -302,6 +362,9 @@ public final class HelloGrpcServiceGrpc {
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_CLIENT_STREAM:
+          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.clientStream(
+              (io.grpc.stub.StreamObserver<org.mytest.test.entity.HelloGrpc.Response>) responseObserver);
         default:
           throw new AssertionError();
       }
@@ -355,6 +418,7 @@ public final class HelloGrpcServiceGrpc {
               .setSchemaDescriptor(new HelloGrpcServiceFileDescriptorSupplier())
               .addMethod(getRequestMethod())
               .addMethod(getServerStreamMethod())
+              .addMethod(getClientStreamMethod())
               .build();
         }
       }

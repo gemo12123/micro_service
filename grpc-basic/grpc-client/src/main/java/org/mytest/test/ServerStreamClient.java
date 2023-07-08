@@ -62,7 +62,7 @@ public class ServerStreamClient {
             }
             @Override
             public void onError(Throwable throwable) {
-                log.error("Server response is error!");
+                log.error("Server response is error!", throwable);
             }
             @Override
             public void onCompleted() {
@@ -70,7 +70,7 @@ public class ServerStreamClient {
             }
         });
         log.info("Request is ending....");
-        // 非阻塞方，必须await，否则程序运行后直接结束
+        // 非阻塞方式，必须await，否则程序运行后直接结束
         channel.awaitTermination(6, TimeUnit.SECONDS);
     }
 }

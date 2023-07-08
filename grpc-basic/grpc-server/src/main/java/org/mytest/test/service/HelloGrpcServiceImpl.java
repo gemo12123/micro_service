@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.mytest.test.entity.HelloGrpc;
 import org.mytest.test.service.HelloGrpcServiceGrpc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author gemo
  * @date 2023/7/7 21:36
@@ -43,5 +46,34 @@ public class HelloGrpcServiceImpl extends HelloGrpcServiceGrpc.HelloGrpcServiceI
             }
         }
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public StreamObserver<HelloGrpc.Request> clientStream(StreamObserver<HelloGrpc.Response> responseObserver) {
+        return new StreamObserver<HelloGrpc.Request>() {
+            List<HelloGrpc.Request> requestList=new ArrayList<>();
+
+            @Override
+            public void onNext(HelloGrpc.Request request) {
+                String param = request.getParam();
+                log.info("Client request param:{}!", param);
+                requestList.add(request);
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                log.error("Client is error!", t);
+            }
+
+            @Override
+            public void onCompleted() {
+                log.info("Client is completed!");
+                responseObserver.onNext(HelloGrpc.Response.newBuilder()
+                      .setStatus(HelloGrpc.Status.SUCCESS)
+                      .setResult("Server stream received " + requestList.size() + " requests")
+                      .build());
+                responseObserver.onCompleted();
+            }
+        };
     }
 }
