@@ -16,6 +16,9 @@ option java_outer_classname = "HelloGrpcServiceDefine";
 
 
 service HelloGrpcService{
+  // 简单RPC/一元RPC
   rpc request(Request) returns (Response);
+  // 服务端流式RPC
+  rpc serverStream(Request) returns (stream Response);
 }
 

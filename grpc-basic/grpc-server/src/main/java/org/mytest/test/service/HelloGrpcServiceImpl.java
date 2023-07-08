@@ -23,4 +23,25 @@ public class HelloGrpcServiceImpl extends HelloGrpcServiceGrpc.HelloGrpcServiceI
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
+
+    @Override
+    public void serverStream(HelloGrpc.Request request, StreamObserver<HelloGrpc.Response> responseObserver) {
+        String param = request.getParam();
+        log.info("Server stream request param:{}", param);
+        for (int i = 0; i < 10; i++) {
+            responseObserver.onNext(HelloGrpc.Response.newBuilder()
+                    .setStatus(i % 2 == 0 ? HelloGrpc.Status.SUCCESS : HelloGrpc.Status.ERROR)
+                    .setResult("this is loop[" + i + "]")
+                    .build());
+            if (param.contains("error") && i % 2 == 0) {
+                throw new RuntimeException();
+            }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        responseObserver.onCompleted();
+    }
 }
