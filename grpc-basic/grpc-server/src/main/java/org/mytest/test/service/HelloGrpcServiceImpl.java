@@ -76,4 +76,34 @@ public class HelloGrpcServiceImpl extends HelloGrpcServiceGrpc.HelloGrpcServiceI
             }
         };
     }
+
+    @Override
+    public StreamObserver<HelloGrpc.Request> bidirectionalStream(StreamObserver<HelloGrpc.Response> responseObserver) {
+        return new StreamObserver<HelloGrpc.Request>() {
+            List<HelloGrpc.Request> requestList=new ArrayList<>();
+            @Override
+            public void onNext(HelloGrpc.Request request) {
+                String param = request.getParam();
+                log.info("Bidirectional stream request param:{}!", param);
+                requestList.add(request);
+                responseObserver.onNext(HelloGrpc.Response.newBuilder()
+                     .setStatus(HelloGrpc.Status.SUCCESS)
+                     .setResult("Server stream has received " + requestList.size() + " requests")
+                     .build());
+            }
+            @Override
+            public void onError(Throwable t) {
+                log.error("Bidirectional stream is error!", t);
+            }
+            @Override
+            public void onCompleted() {
+                log.info("Bidirectional stream is completed!");
+                responseObserver.onNext(HelloGrpc.Response.newBuilder()
+                    .setStatus(HelloGrpc.Status.SUCCESS)
+                    .setResult("Server response is completed, the total number of server received is " + requestList.size() + " requests")
+                    .build());
+                responseObserver.onCompleted();
+            }
+        };
+    }
 }

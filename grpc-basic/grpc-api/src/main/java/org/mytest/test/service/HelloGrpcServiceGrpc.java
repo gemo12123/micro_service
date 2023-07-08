@@ -108,6 +108,37 @@ public final class HelloGrpcServiceGrpc {
     return getClientStreamMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<org.mytest.test.entity.HelloGrpc.Request,
+      org.mytest.test.entity.HelloGrpc.Response> getBidirectionalStreamMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "bidirectionalStream",
+      requestType = org.mytest.test.entity.HelloGrpc.Request.class,
+      responseType = org.mytest.test.entity.HelloGrpc.Response.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+  public static io.grpc.MethodDescriptor<org.mytest.test.entity.HelloGrpc.Request,
+      org.mytest.test.entity.HelloGrpc.Response> getBidirectionalStreamMethod() {
+    io.grpc.MethodDescriptor<org.mytest.test.entity.HelloGrpc.Request, org.mytest.test.entity.HelloGrpc.Response> getBidirectionalStreamMethod;
+    if ((getBidirectionalStreamMethod = HelloGrpcServiceGrpc.getBidirectionalStreamMethod) == null) {
+      synchronized (HelloGrpcServiceGrpc.class) {
+        if ((getBidirectionalStreamMethod = HelloGrpcServiceGrpc.getBidirectionalStreamMethod) == null) {
+          HelloGrpcServiceGrpc.getBidirectionalStreamMethod = getBidirectionalStreamMethod =
+              io.grpc.MethodDescriptor.<org.mytest.test.entity.HelloGrpc.Request, org.mytest.test.entity.HelloGrpc.Response>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "bidirectionalStream"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  org.mytest.test.entity.HelloGrpc.Request.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  org.mytest.test.entity.HelloGrpc.Response.getDefaultInstance()))
+              .setSchemaDescriptor(new HelloGrpcServiceMethodDescriptorSupplier("bidirectionalStream"))
+              .build();
+        }
+      }
+    }
+    return getBidirectionalStreamMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -186,6 +217,16 @@ public final class HelloGrpcServiceGrpc {
       return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getClientStreamMethod(), responseObserver);
     }
 
+    /**
+     * <pre>
+     * 双向流RPC
+     * </pre>
+     */
+    public io.grpc.stub.StreamObserver<org.mytest.test.entity.HelloGrpc.Request> bidirectionalStream(
+        io.grpc.stub.StreamObserver<org.mytest.test.entity.HelloGrpc.Response> responseObserver) {
+      return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getBidirectionalStreamMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -209,6 +250,13 @@ public final class HelloGrpcServiceGrpc {
                 org.mytest.test.entity.HelloGrpc.Request,
                 org.mytest.test.entity.HelloGrpc.Response>(
                   this, METHODID_CLIENT_STREAM)))
+          .addMethod(
+            getBidirectionalStreamMethod(),
+            io.grpc.stub.ServerCalls.asyncBidiStreamingCall(
+              new MethodHandlers<
+                org.mytest.test.entity.HelloGrpc.Request,
+                org.mytest.test.entity.HelloGrpc.Response>(
+                  this, METHODID_BIDIRECTIONAL_STREAM)))
           .build();
     }
   }
@@ -258,6 +306,17 @@ public final class HelloGrpcServiceGrpc {
         io.grpc.stub.StreamObserver<org.mytest.test.entity.HelloGrpc.Response> responseObserver) {
       return io.grpc.stub.ClientCalls.asyncClientStreamingCall(
           getChannel().newCall(getClientStreamMethod(), getCallOptions()), responseObserver);
+    }
+
+    /**
+     * <pre>
+     * 双向流RPC
+     * </pre>
+     */
+    public io.grpc.stub.StreamObserver<org.mytest.test.entity.HelloGrpc.Request> bidirectionalStream(
+        io.grpc.stub.StreamObserver<org.mytest.test.entity.HelloGrpc.Response> responseObserver) {
+      return io.grpc.stub.ClientCalls.asyncBidiStreamingCall(
+          getChannel().newCall(getBidirectionalStreamMethod(), getCallOptions()), responseObserver);
     }
   }
 
@@ -326,6 +385,7 @@ public final class HelloGrpcServiceGrpc {
   private static final int METHODID_REQUEST = 0;
   private static final int METHODID_SERVER_STREAM = 1;
   private static final int METHODID_CLIENT_STREAM = 2;
+  private static final int METHODID_BIDIRECTIONAL_STREAM = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -364,6 +424,9 @@ public final class HelloGrpcServiceGrpc {
       switch (methodId) {
         case METHODID_CLIENT_STREAM:
           return (io.grpc.stub.StreamObserver<Req>) serviceImpl.clientStream(
+              (io.grpc.stub.StreamObserver<org.mytest.test.entity.HelloGrpc.Response>) responseObserver);
+        case METHODID_BIDIRECTIONAL_STREAM:
+          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.bidirectionalStream(
               (io.grpc.stub.StreamObserver<org.mytest.test.entity.HelloGrpc.Response>) responseObserver);
         default:
           throw new AssertionError();
@@ -419,6 +482,7 @@ public final class HelloGrpcServiceGrpc {
               .addMethod(getRequestMethod())
               .addMethod(getServerStreamMethod())
               .addMethod(getClientStreamMethod())
+              .addMethod(getBidirectionalStreamMethod())
               .build();
         }
       }

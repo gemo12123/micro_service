@@ -22,5 +22,7 @@ service HelloGrpcService{
   rpc serverStream(Request) returns (stream Response);
   // 客户端流式RPC
   rpc clientStream(stream Request) returns (Response);
+  // 双向流RPC
+  rpc bidirectionalStream(stream Request) returns (stream Response);
 }
 
