@@ -1,4 +1,4 @@
-package org.mytest.test;
+package org.mytest.test.client;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -10,6 +10,8 @@ import org.mytest.test.service.HelloGrpcServiceGrpc;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 双向流RPC Client
+ *
  * @author gemo
  * @date 2023/7/7 22:04
  */

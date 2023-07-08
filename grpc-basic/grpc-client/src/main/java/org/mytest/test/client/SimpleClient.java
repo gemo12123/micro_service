@@ -1,4 +1,4 @@
-package org.mytest.test;
+package org.mytest.test.client;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -7,6 +7,8 @@ import org.mytest.test.entity.HelloGrpc;
 import org.mytest.test.service.HelloGrpcServiceGrpc;
 
 /**
+ * 一元RPC Client
+ *
  * @author gemo
  * @date 2023/7/7 22:04
  */
