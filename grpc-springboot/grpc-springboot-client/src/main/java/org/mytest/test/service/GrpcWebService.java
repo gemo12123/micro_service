@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class GrpcWebService {
-    @GrpcClient("my-service")
+    @GrpcClient("grpc-springboot-server")
     private HelloGrpcServiceGrpc.HelloGrpcServiceBlockingStub blockingStub;
 
     public String blockingExecute() throws InvalidProtocolBufferException {
