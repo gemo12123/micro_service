@@ -1,5 +1,6 @@
 package org.mytest.test.nameresolution.consul;
 
+import com.google.common.net.HostAndPort;
 import com.orbitz.consul.Consul;
 import com.orbitz.consul.HealthClient;
 import com.orbitz.consul.model.ConsulResponse;
@@ -37,11 +38,12 @@ public class CustomNameResolver extends NameResolver {
     public CustomNameResolver(String authority) {
         this.authority = authority;
         consul = Consul.builder()
+                .withHostAndPort(HostAndPort.fromParts("127.0.0.1", 8500))
                 .build();
     }
 
     /**
-     * authority 概念 服务器集群的名字 grpc-server
+     * authority 概念, 服务器集群的名字:gRpc-service
      */
     @Override
     public String getServiceAuthority() {
@@ -49,8 +51,7 @@ public class CustomNameResolver extends NameResolver {
     }
 
     /**
-     * listener 中文 叫做监听
-     * start方法中我们要周期的发起对于名字解析的请求，获取最新的服务列表
+     * start方法中我们要周期的发起对于远程服务解析的请求，获取最新的服务列表
      *
      * @param listener used to receive updates on the target
      */
@@ -111,13 +112,5 @@ public class CustomNameResolver extends NameResolver {
     @Override
     public void refresh() {
         super.refresh();
-    }
-
-    public static void main(String[] args) {
-        HealthClient healthClient = Consul.builder()
-                .build().healthClient();
-        ConsulResponse<List<ServiceHealth>> response = healthClient.getHealthyServiceInstances("consul:///gRpc-service");
-        List<ServiceHealth> healthList = response.getResponse();
-        System.out.println(healthList);
     }
 }

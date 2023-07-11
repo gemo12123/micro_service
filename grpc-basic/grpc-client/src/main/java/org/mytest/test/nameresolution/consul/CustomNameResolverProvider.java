@@ -11,7 +11,7 @@ import java.net.URI;
  */
 public class CustomNameResolverProvider extends NameResolverProvider {
     /**
-     * 作用：告知Grpc 自定义的ResolverProvider生效
+     * 该自定义的ResolverProvider是否生效
      *
      * @return
      */
@@ -21,6 +21,7 @@ public class CustomNameResolverProvider extends NameResolverProvider {
     }
 
     /**
+     * 该NameResolverProvider的优先级（0-10），
      * 优先级应该高于DNS（5）命名服务
      *
      * @return
@@ -32,7 +33,9 @@ public class CustomNameResolverProvider extends NameResolverProvider {
 
     @Override
     public NameResolver newNameResolver(URI targetUri, NameResolver.Args args) {
-        return new CustomNameResolver(targetUri.toString());
+        // 注意这里是targetUri.getPath()还是targetUri.toString()
+        // consul应该是targetUri.getPath()
+        return new CustomNameResolver(targetUri.getPath());
     }
 
     /**
