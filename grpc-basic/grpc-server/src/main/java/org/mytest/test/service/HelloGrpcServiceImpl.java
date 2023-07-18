@@ -23,6 +23,14 @@ public class HelloGrpcServiceImpl extends HelloGrpcServiceGrpc.HelloGrpcServiceI
                 .setStatus(param.length() > 3 ? HelloGrpc.Status.SUCCESS : HelloGrpc.Status.ERROR)
                 .setResult("server response [" + param + "]")
                 .build();
+        if (param.contains("deadline")) {
+            try {
+                Thread.sleep(5*1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            log.info("sleep end.....");
+        }
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
