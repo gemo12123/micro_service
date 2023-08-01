@@ -2,4 +2,4 @@
 > 微服务整理
 >
 
-预期整理 Apache Dubbo、gRPC、Apache Thrift
+预期整理 Apache Dubbo、gRPC
